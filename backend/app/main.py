@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-import .models
+import models
 from database import SessionLocal, engine
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
