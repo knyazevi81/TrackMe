@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
-import models
-from database import SessionLocal, engine
+from app.models import Base
+from app.database import SessionLocal, engine
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 import time
@@ -8,7 +8,7 @@ from routes.users import route as users_route
 from routes.tasks import route as tasks_route
 from routes.auth import route as auth_route
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = SessionLocal()
