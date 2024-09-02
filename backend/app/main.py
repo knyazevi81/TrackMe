@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
-from app.models import Base
-from app.database import SessionLocal, engine
+from models import Base
+from database import SessionLocal, engine
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 import time
