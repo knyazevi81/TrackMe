@@ -1,11 +1,11 @@
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from enum import Enum
-from schemas import UserRole
+from .schemas import UserRole
 import datetime
 
 
-from database import Base
+from .database import Base
 
 
 class User(Base):

@@ -1,11 +1,13 @@
 # авторизация
 from fastapi import APIRouter
-import crud, models, schemas
-from database import SessionLocal, engine
+from ..crud import *
+from ..models import *
+from  ..schemas import *
+from ..database import SessionLocal, engine
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 
-from routes.jwt_utils import create_access_token
+from .jwt_utils import create_access_token
 
 route = APIRouter(
     prefix="/auth",

@@ -1,20 +1,20 @@
 from sqlalchemy.orm import Session
-import models
-import schemas
+from .models import *
+from .schemas import *
 from datetime import datetime
 
-def get_users(db: Session, skip: int = 0, limit: int = 20) -> list[schemas.User]:
+def get_users(db: Session, skip: int = 0, limit: int = 20) -> list[User]:
     """
     Вывод всех юзеров
     """
-    return db.query(models.User).offset(skip).limit(limit).all()
+    return db.query(User).offset(skip).limit(limit).all()
 
 
 def get_user_exist(db: Session, tg_id: int):
     """
     Проверка на существаоние юзера
     """
-    return db.query(models.User).filter(models.User.tg_id==tg_id).first()
+    return db.query(User).filter(User.tg_id==tg_id).first()
 
 
 def get_tasks(db: Session, skip_finished: bool = True):
@@ -24,9 +24,9 @@ def get_tasks(db: Session, skip_finished: bool = True):
        то есть, выводит только исполненые задачи
     """
     if skip_finished:
-        return db.query(models.Task).filter(models.Task.status==True).all()
+        return db.query(Task).filter(Task.status==True).all()
     else:
-        return db.query(models.Task).all()
+        return db.query(Task).all()
 
 
 def get_user_tasks(db: Session, users_id: int, skip_ready: bool = True):
@@ -34,24 +34,24 @@ def get_user_tasks(db: Session, users_id: int, skip_ready: bool = True):
     Вывод задач конкретного юзера
     """
     if skip_ready:
-        return db.query(models.Task).filter_by(
-            models.Task.status==True,
-            models.Task.user_id==users_id
+        return db.query(Task).filter_by(
+            Task.status==True,
+            Task.user_id==users_id
         ).all()
     else:
-        return db.query(models.Task).filter(
-            models.Task.user_id==users_id
+        return db.query(Task).filter(
+            Task.user_id==users_id
         ).all()
     
 
-def create_task(db: Session, task: schemas.TaskCreate):
+def create_task(db: Session, task: TaskCreate):
     """
     Функция для создания задачи для юзера
     """
     # FIX нужно добавить проверку на существование юзера
     # в ином случае задача будет создаваться для юзеров, которые не сущетсвует
 
-    db_task = models.Task(
+    db_task = Task(
         **task.dict(),
         date=datetime.today().now()
     )
@@ -61,8 +61,8 @@ def create_task(db: Session, task: schemas.TaskCreate):
     return db_task
 
 
-def create_user(db: Session, user: schemas.UserCreate):
-    db_user = models.User(
+def create_user(db: Session, user: UserCreate):
+    db_user = User(
         tg_id=user.tg_id,
         name=user.name,
         role=user.role,
@@ -75,7 +75,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def deactivate_user(db: Session, user_id):
-    user = db.query(models.User).filter_by(id=user_id).first()
+    user = db.query(User).filter_by(id=user_id).first()
     user.is_active = False
     db.commit()
     db.refresh(user)
@@ -83,7 +83,7 @@ def deactivate_user(db: Session, user_id):
 
 
 def activate_user(db: Session, user_id):
-    user = db.query(models.User).filter_by(id=user_id).first()
+    user = db.query(User).filter_by(id=user_id).first()
     user.is_active = True
     db.commit()
     db.refresh(user)
