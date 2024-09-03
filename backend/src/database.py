@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "sqlite:///./app_base.db"
+DATABASE_URL = "sqlite:///backend/src/app_base.db"
 
 engine = create_engine(
     url=DATABASE_URL,
