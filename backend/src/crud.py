@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from src import models
-from src import schemas
+import models
+import schemas
 from datetime import datetime
 
 def get_users(db: Session, skip: int = 0, limit: int = 20) -> list[schemas.User]:

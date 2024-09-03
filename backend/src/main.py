@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Request
-from src.models import Base
-from src.database import SessionLocal, engine
+from models import Base
+from database import SessionLocal, engine
 from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 import time
-from src.routes.users import route as users_route
-from src.routes.tasks import route as tasks_route
-from src.routes.auth import route as auth_route
+from routes.users import route as users_route
+from routes.tasks import route as tasks_route
+from routes.auth import route as auth_route
 
 Base.metadata.create_all(bind=engine)
 
